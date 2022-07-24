@@ -32,7 +32,7 @@ public class App {
         GeraStickers geraStickers = new GeraStickers();
         for (Map<String,String> filme : listaFilmes){
 
-            String URLImagem = filme.get("image").replace(target, replacement);
+            String URLImagem = filme.get("image");
             String titulo = filme.get("title");
             InputStream inputStream = new URL(URLImagem).openStream();
 
