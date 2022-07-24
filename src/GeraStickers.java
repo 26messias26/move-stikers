@@ -3,6 +3,8 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.InputStream;
+import java.net.URL;
 
 import javax.imageio.ImageIO;
 
@@ -10,9 +12,11 @@ public class GeraStickers {
 
     // ler imagem
 
-    public void criar() throws Exception{
+    public void criar(InputStream inputStream, String nomeArquivo) throws Exception{
 
-        BufferedImage imagemOriginal = ImageIO.read(new File("shared/theGodfather_maior.jpg"));
+
+        // inputStream = new URL("https://m.media-amazon.com/images/M/MV5BM2MyNjYxNmUtYTAwNi00MTYxLWJmNWYtYzZlODY3ZTk3OTFlXkEyXkFqcGdeQXVyNzkwMjQ5NzM@.jpg").openStream();
+        BufferedImage imagemOriginal = ImageIO.read(inputStream);
         
         // criar nova imagem em memoria com transparencia  e com  tamanho novo
         // 1 - pegando o tamanho e a autura da imagem original
@@ -44,13 +48,7 @@ public class GeraStickers {
         
         // escrever a nova imagem em um arquivo 
         
-        ImageIO.write(novaImagem, "png", new File("shared/saida/novaFoto.png"));// fazer gerar pasta automaticamente
-    }
-
-    public static void main(String[] args) throws Exception {
-        var gerador = new GeraStickers();
-
-        gerador.criar();
+        ImageIO.write(novaImagem, "png", new File("shared/saida/"+nomeArquivo));// fazer gerar pasta automaticamente
     }
         
 }

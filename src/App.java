@@ -1,4 +1,6 @@
+import java.io.InputStream;
 import java.net.URI;
+import java.net.URL;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
@@ -26,22 +28,31 @@ public class App {
         List<Map<String,String>> listaFilmes = parser.parse(body);
         // manipular os dados
 
-        final String starcode = "\u2B50";
+        // final String starcode = "\u2B50";
+        GeraStickers geraStickers = new GeraStickers();
         for (Map<String,String> filme : listaFilmes){
 
-            String rating = filme.get("imDbRating");
-            int nota = Integer.parseInt(rating.substring(0, 1));
+            String URLImagem = filme.get("image").replace(target, replacement);
+            String titulo = filme.get("title");
+            InputStream inputStream = new URL(URLImagem).openStream();
+
+            String nomeArquivo = titulo + ".png";
+
+            geraStickers.criar(inputStream, nomeArquivo);
+
+            // String rating = filme.get("imDbRating");
+            // int nota = Integer.parseInt(rating.substring(0, 1));
             
-            String star ="";
+            // String star ="";
 
-            for (int i = 0; i < nota; i++) {
-                 star += starcode;
-            }
+            // for (int i = 0; i < nota; i++) {
+            //      star += starcode;
+            // }
 
-            System.out.println("\u001b[1m Tiulo: \u001b[m \u001b[2m"+filme.get("title")+"\u001b[m");
-            System.out.println("\u001b[1m Capa: \u001b[m \u001b[2m"+filme.get("image")+"\u001b[m");
-            System.out.println("\u001b[1m Nota: \u001b[m \u001b[31m"+filme.get("imDbRating")+"\u001b[m");
-            System.out.println("\u001b[44m"+star+" \u001b[m\n");
+            System.out.println("\u001b[44m \u001b[1m Tiulo: \u001b[m \u001b[2m"+titulo+"\u001b[m \n");
+            // System.out.println("\u001b[1m Capa: \u001b[m \u001b[2m"+filme.get("image")+"\u001b[m");
+            // System.out.println("\u001b[1m Nota: \u001b[m \u001b[31m"+filme.get("imDbRating")+"\u001b[m");
+            // System.out.println("\u001b[44m"+star+" \u001b[m\n");
 
         }
     }
