@@ -33,10 +33,17 @@ public class App {
         for (Map<String,String> filme : listaFilmes){
 
             String URLImagem = filme.get("image");
-            String titulo = filme.get("title");
-            InputStream inputStream = new URL(URLImagem).openStream();
 
+            // Removendo o parametro que reduz a resolução da imagem
+            int LengthURL = URLImagem.length();
+            String parametroARemover = URLImagem.substring(LengthURL-32, LengthURL-4);
+            URLImagem = URLImagem.replace(parametroARemover, "");
+            
+            // Pegando titulo do filme
+            String titulo = filme.get("title");
             String nomeArquivo = titulo + ".png";
+
+            InputStream inputStream = new URL(URLImagem).openStream();
 
             geraStickers.criar(inputStream, nomeArquivo);
 
